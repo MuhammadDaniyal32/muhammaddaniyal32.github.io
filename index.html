@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <base href="/">
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="A Flutter Portfolio App">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Muhammad Daniyal">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="icons/favicon-32x32.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <title>Muhammad Daniyal</title>
+  <link rel="manifest" href="manifest.json">
+  <script>
+    const serviceWorkerVersion = "2866645544";
+  </script>
+  <script src="flutter.js" defer></script>
+</head>
+
+<body>
+
+  <style>
+    body {
+      background-color: #161e31;
+      height: 100vh;
+      width: 100vw;
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      user-select: none;
+      touch-action: none;
+    }
+
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.4s ease-out;
+    }
+
+    img {
+      width: 180px;
+      height: 50px;
+      position: absolute;
+      opacity: 0;
+      animation: fadeIn 1s 0.5s forwards;
+    }
+
+    .loader {
+      position: relative;
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, #676f9d, #424769, #2d3250, #161e31);
+      animation: animate 1.5s linear infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .loader::before,
+    .loader::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+    }
+
+    .loader::before {
+      width: 120%;
+      height: 120%;
+      background: radial-gradient(circle, rgba(0, 0, 0, 0) 60%, rgba(255, 255, 255, 0.1));
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    .loader::after {
+      width: 80%;
+      height: 80%;
+      background: #161e31;
+    }
+
+    @keyframes animate {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1);
+      }
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+  <script>
+    function delay(time) {
+      return new Promise(resolve => setTimeout(resolve, time));
+    }
+
+    window.addEventListener('load', function (ev) {
+      var loaderContent = document.querySelector('#loader-content');
+      _flutter.loader.loadEntrypoint({
+        serviceWorker: {
+          serviceWorkerVersion: serviceWorkerVersion,
+        }
+      }).then(function (engineInitializer) {
+        return engineInitializer.initializeEngine();
+      }).then(async function (appRunner) {
+        loaderContent.style.opacity = "0";
+        await delay(400);
+        await appRunner.runApp();
+      });
+    });
+  </script>
+
+  <div class="main-content" id="loader-content">
+    <div class="loader"></div>
+    <img src="logo.png" />
+  </div>
+</body>
+
+</html>
